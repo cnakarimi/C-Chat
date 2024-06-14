@@ -19,7 +19,7 @@ const Chatroom: React.FC = () => {
             <p className="pl-3">Unread</p>
           </p>
         </div>
-        <span className="lg:w-7 lg:h-7 bg-emerald-500 rounded-full text-lg text-center cursor-pointer">
+        <span className="lg:w-7 lg:h-7 bg-lightblue rounded-full text-lg text-center cursor-pointer">
           +
         </span>
       </div>
@@ -29,9 +29,22 @@ const Chatroom: React.FC = () => {
             src="https://i.pravatar.cc/150?u=a04258114e29026302d"
             size="lg"
           />
+          <div className="flex flex-col justify-between mx-5 w-3/4 ">
+            <p className="font-bold">Mamad</p>
+            <div className="flex place-content-between text-gray-400 font-semibold">
+              <p>Tedhfgwehf</p>
+              <p className="">22:22</p>
+            </div>
+          </div>
+        </li>
+        <li className="flex pt-4">
+          <Avatar
+            src="https://i.pravatar.cc/150?u=a04258114e29026302d"
+            size="lg"
+          />
           <div className="flex flex-col justify-between mx-5 w-3/4">
-            <p>Mamad</p>
-            <div className="flex place-content-between	">
+            <p className="font-bold">Mamad</p>
+            <div className="flex place-content-between	text-gray-400 font-semibold">
               <p>Text</p>
               <p className="">22:22</p>
             </div>
@@ -43,21 +56,8 @@ const Chatroom: React.FC = () => {
             size="lg"
           />
           <div className="flex flex-col justify-between mx-5 w-3/4">
-            <p>Mamad</p>
-            <div className="flex place-content-between	">
-              <p>Text</p>
-              <p className="">22:22</p>
-            </div>
-          </div>
-        </li>
-        <li className="flex pt-4">
-          <Avatar
-            src="https://i.pravatar.cc/150?u=a04258114e29026302d"
-            size="lg"
-          />
-          <div className="flex flex-col justify-between mx-5 w-3/4">
-            <p>Mamad</p>
-            <div className="flex place-content-between	">
+            <p className="font-bold">Mamad</p>
+            <div className="flex place-content-between	text-gray-400 font-semibold">
               <p>Text</p>
               <p className="">22:22</p>
             </div>
