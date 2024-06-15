@@ -13,6 +13,8 @@ module.exports = {
       colors: {
         lightblue: "#00FFD1",
         chatbg: "#F0EFF9",
+        chatbubble: "#CCC4FD",
+        userbubble: "#A3EFFA",
       },
     },
   },

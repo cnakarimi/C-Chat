@@ -2,3 +2,8 @@ body {
   margin: 0;
   padding: 0;
 }
+.inner-round {
+  --mask: radial-gradient(20px at 100% 0, #0000 98%, #000);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}

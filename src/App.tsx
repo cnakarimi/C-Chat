@@ -1,6 +1,7 @@
 import Menu from "./components/Menu";
 import Chatroom from "./components/Chatroom";
 import MainPage from "./components/MainPage";
+import Emojis from "./components/Emojis";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <Menu />
       <Chatroom />
       <MainPage />
-      <p className="bg-slate-900 lg:basis-3/12	">Emojies</p>
+      <Emojis />
     </div>
   );
 }
