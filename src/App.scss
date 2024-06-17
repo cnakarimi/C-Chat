@@ -7,3 +7,77 @@ body {
   -webkit-mask: var(--mask);
   mask: var(--mask);
 }
+
+.inverted-border-radius {
+  position: relative;
+  /* background of main div*/
+  padding: 20px;
+  border-radius: 0px 8px 8px 8px;
+  display: grid;
+  place-items: center;
+}
+
+.inverted-border-radius:before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  background: transparent;
+
+  /* border-radius of pseudo element */
+  border-bottom-right-radius: 50%;
+
+  /* box shadow to give the shadow of the pseudo-element the same color as the background */
+  box-shadow: 0 20px 0 0 #f0eff9;
+}
+.inverted-border-radius:after {
+  content: "";
+  position: absolute;
+
+  background-color: transparent;
+  bottom: -40px;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  border-top-right-radius: 25px;
+  box-shadow: 0 -25px 0 0 #f0eff9;
+}
+.inverted-border-menu {
+  position: relative;
+  /* background of main div*/
+  padding: 20px;
+  border-radius: 0px 8px 8px 8px;
+  display: grid;
+  place-items: center;
+}
+
+// Inverted border radius for Menu
+.inverted-border-menu:before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: 0px;
+  height: 40px;
+  width: 30px;
+  background: transparent;
+
+  /* border-radius of pseudo element */
+  border-bottom-right-radius: 50%;
+
+  /* box shadow to give the shadow of the pseudo-element the same color as the background */
+  box-shadow: 0 24px 0 0 white;
+}
+.inverted-border-menu:after {
+  content: "";
+  position: absolute;
+
+  background-color: transparent;
+  bottom: -40px;
+  right: -8px;
+  height: 40px;
+  width: 40px;
+  border-top-right-radius: 25px;
+  box-shadow: 0 -24px 0 0 white;
+}

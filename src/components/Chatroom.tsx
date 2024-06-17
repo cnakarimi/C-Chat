@@ -23,7 +23,7 @@ const Chatroom: React.FC = () => {
         <CiCirclePlus className="size-7 text-gray-400" />
       </div>
       <ul className="pt-5">
-        <li className="flex items-center py-4 px-3 rounded-l-lg  bg-chatbg">
+        <li className="flex items-center py-4 px-3 ">
           <Avatar
             src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
             size="lg"
@@ -36,7 +36,7 @@ const Chatroom: React.FC = () => {
             </div>
           </div>
         </li>
-        <li className="flex items-center pt-4">
+        <li className="flex items-center py-4">
           <Avatar
             src="https://i.pravatar.cc/150?u=a04258114e29026302d"
             size="lg"
@@ -49,7 +49,7 @@ const Chatroom: React.FC = () => {
             </div>
           </div>
         </li>
-        <li className="flex items-center pt-4">
+        <li className="flex items-center rounded-l-lg	 inverted-border-radius  bg-chatbg py-4">
           <Avatar
             src="https://i.pravatar.cc/150?u=a04258114e29026302d"
             size="lg"
