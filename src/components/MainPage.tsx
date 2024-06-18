@@ -1,11 +1,69 @@
 import { Avatar } from "@nextui-org/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { CiCirclePlus, CiSearch } from "react-icons/ci";
+import { CiSearch } from "react-icons/ci";
 import { GrEmoji } from "react-icons/gr";
 import { RxPencil1 } from "react-icons/rx";
 import { VscSend } from "react-icons/vsc";
+import { faker } from "@faker-js/faker";
+import { toggleEmojis } from "../store/features/EmojisSlice";
+import { useAppDispatch } from "../store/store";
 
 const MainPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  function createRandomUser(): User {
+    return {
+      _id: faker.string.uuid(),
+      avatar: faker.image.avatar(),
+      birthday: faker.date.birthdate(),
+      email: faker.internet.email(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      sex: faker.person.sexType(),
+      subscriptionTier: faker.helpers.arrayElement([
+        "free",
+        "basic",
+        "business",
+      ]),
+    };
+  }
+
+  const user = createRandomUser();
+  const user1 = createRandomUser();
+  const user2 = createRandomUser();
+  const user3 = createRandomUser();
+  const user4 = createRandomUser();
+  const user5 = createRandomUser();
+  const user6 = createRandomUser();
+  const user7 = createRandomUser();
+  const user8 = createRandomUser();
+  const user9 = createRandomUser();
+  const user10 = createRandomUser();
+  const users = [
+    user,
+    user1,
+    user2,
+    user3,
+    user4,
+    user5,
+    user6,
+    user7,
+    user8,
+    user9,
+    user10,
+  ];
+  console.log(users);
+
+  const usersChat = users.map((user) => (
+    <div className="mt-3" id={user._id}>
+      <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
+        <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
+          {user.firstName}
+        </p>
+      </div>
+    </div>
+  ));
+
   return (
     <div className="lg:basis-6/12 h-full bg-chatbg flex flex-col relative">
       <header className="py-5 px-4 flex bg-white">
@@ -26,8 +84,8 @@ const MainPage: React.FC = () => {
           </div>
         </div>
       </header>
-      <div className="pt-12 px-5">
-        <div className="flex place-items-center	">
+      <div className="pt-12 mb-32 px-5 overflow-y-auto">
+        <div className="flex place-items-center">
           <Avatar
             src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
             size="sm"
@@ -37,14 +95,7 @@ const MainPage: React.FC = () => {
           <p className="px-1 text-gray-500">Edited</p>
           <p className="text-gray-500">22:22</p>
         </div>
-        <div className="mt-3">
-          <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
-            <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
-              That's awesome. I think our users will really appreciate the
-              improvements.
-            </p>
-          </div>
-        </div>
+        {usersChat}
         <div className="mt-3">
           <p className="text-gray-500">22:22</p>
           <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
@@ -98,22 +149,32 @@ const MainPage: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 w-full my-4 px-2">
-        <div className="flex items-center">
-          <input
-            className="w-full place-content-center px-11 py-2 border-2	 rounded-xl relative"
-            placeholder="Type Here..."
-            type="text"
-          />
-          <div className="flex justify-between absolute left-0 px-3 w-full">
-            <GrEmoji className="size-8 text-gray-400 cursor-pointer" />
-            <div className="flex justify-around basis-1/6">
-              <CiCirclePlus className="size-7 text-gray-400" />
-              <VscSend className="size-7 text-gray-400" />
-            </div>
+      <form className="absolute bottom-0 w-full py-4 px-2 bg-white justify-center">
+        <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
+          Search
+        </label>
+        <div className="relative">
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3 ">
+            <GrEmoji
+              className="size-8 text-gray-400 cursor-pointer"
+              onClick={() => dispatch(toggleEmojis())}
+            />
           </div>
+          <input
+            type="search"
+            id="search"
+            className="block w-full p-4 ps-14 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Type Here..."
+            required
+          />
+          <button
+            type="submit"
+            className="text-white absolute end-2.5 bottom-1/2 translate-y-1/2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <VscSend className="size-7 text-gray-400 justify-self-center	" />
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
