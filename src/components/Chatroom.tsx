@@ -65,7 +65,7 @@ const Chatroom: React.FC = () => {
     );
   });
   return (
-    <p className="bg-white lg:basis-4/12 lg:pl-5 lg:pt-8">
+    <p className="bg-white lg:basis-4/12 lg:pl-5 lg:pt-8 ">
       <SearchBar />
       <div className="flex justify-between lg:mx-5 lg:pt-9">
         <div className="flex lg:w-7/12 justify-between">
@@ -84,26 +84,14 @@ const Chatroom: React.FC = () => {
       </div>
       <ul className="pt-5 overflow-y-auto">
         {usersInChat}
-        <li className="flex items-center py-4">
+
+        <li className="flex items-center rounded-l-lg	 inverted-border-radius  bg-chatbg">
           <Avatar
             src="https://i.pravatar.cc/150?u=a04258114e29026302d"
             size="lg"
           />
           <div className="flex flex-col justify-between mx-5 w-3/4">
-            <p className="font-bold">Mamad</p>
-            <div className="flex place-content-between	text-gray-400 font-semibold">
-              <p>Text</p>
-              <p className="">22:22</p>
-            </div>
-          </div>
-        </li>
-        <li className="flex items-center rounded-l-lg	 inverted-border-radius  bg-chatbg py-4">
-          <Avatar
-            src="https://i.pravatar.cc/150?u=a04258114e29026302d"
-            size="lg"
-          />
-          <div className="flex flex-col justify-between mx-5 w-3/4">
-            <p className="font-bold">Mamad</p>
+            <p className="font-bold">jjj</p>
             <div className="flex place-content-between	text-gray-400 font-semibold">
               <p>Text</p>
               <p className="">22:22</p>

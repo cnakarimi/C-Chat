@@ -5,12 +5,11 @@ import { GrEmoji } from "react-icons/gr";
 import { RxPencil1 } from "react-icons/rx";
 import { VscSend } from "react-icons/vsc";
 import { faker } from "@faker-js/faker";
-import { toggleEmojis } from "../store/features/EmojisSlice";
-import { useAppDispatch } from "../store/store";
+import { createContext, useState } from "react";
+import { useMyContext } from "./context/EmojiToggler";
 
 const MainPage: React.FC = () => {
-  const dispatch = useAppDispatch();
-
+  const { toggle } = useMyContext();
   function createRandomUser(): User {
     return {
       _id: faker.string.uuid(),
@@ -157,7 +156,7 @@ const MainPage: React.FC = () => {
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 ">
             <GrEmoji
               className="size-8 text-gray-400 cursor-pointer"
-              onClick={() => dispatch(toggleEmojis())}
+              onClick={toggle}
             />
           </div>
           <input

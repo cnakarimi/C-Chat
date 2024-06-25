@@ -1,11 +1,10 @@
 import EmojiPicker from "emoji-picker-react";
-import { useAppSelector } from "../hooks";
+import { useMyContext } from "./context/EmojiToggler";
 
 const Emojis: React.FC = () => {
-  const emojiState = useAppSelector((state) => state.emojis.toggler);
-  console.log(emojiState);
+  const { isOn } = useMyContext();
   return (
-    <div className={`${emojiState ? "" : "hidden"}`}>
+    <div className={`${isOn && "hidden"}`}>
       <EmojiPicker height="100%" />
     </div>
   );
