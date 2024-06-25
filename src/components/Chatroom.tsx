@@ -3,6 +3,7 @@ import Chat from "../assets/Chat";
 import { Avatar, Badge } from "@nextui-org/react";
 import { CiCirclePlus } from "react-icons/ci";
 import { faker } from "@faker-js/faker";
+import { NavLink } from "react-router-dom";
 
 const Chatroom: React.FC = () => {
   function createRandomUser(): User {
@@ -49,7 +50,12 @@ const Chatroom: React.FC = () => {
 
   const usersInChat = users.map((user) => {
     return (
-      <li className="flex items-center py-4 px-3 " id={user._id}>
+      <NavLink
+        className="flex items-center cursor-pointer py-4 px-3 rounded-l-lg	 inverted-border-radius  bg-chatbg"
+        id={user._id}
+        onClick={() => console.log(`${user._id} clicked`)}
+        to={`/:${user._id}`}
+      >
         <Avatar
           src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
           size="lg"
@@ -61,11 +67,11 @@ const Chatroom: React.FC = () => {
             <p className="">22:22</p>
           </div>
         </div>
-      </li>
+      </NavLink>
     );
   });
   return (
-    <p className="bg-white lg:basis-4/12 lg:pl-5 lg:pt-8 ">
+    <p className="bg-white lg:basis-4/12 lg:pl-5 lg:pt-8 overflow-y-auto">
       <SearchBar />
       <div className="flex justify-between lg:mx-5 lg:pt-9">
         <div className="flex lg:w-7/12 justify-between">
@@ -82,23 +88,7 @@ const Chatroom: React.FC = () => {
         </div>
         <CiCirclePlus className="size-7 text-gray-400" />
       </div>
-      <ul className="pt-5 overflow-y-auto">
-        {usersInChat}
-
-        <li className="flex items-center rounded-l-lg	 inverted-border-radius  bg-chatbg">
-          <Avatar
-            src="https://i.pravatar.cc/150?u=a04258114e29026302d"
-            size="lg"
-          />
-          <div className="flex flex-col justify-between mx-5 w-3/4">
-            <p className="font-bold">jjj</p>
-            <div className="flex place-content-between	text-gray-400 font-semibold">
-              <p>Text</p>
-              <p className="">22:22</p>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <ul className="pt-5">{usersInChat}</ul>
     </p>
   );
 };

@@ -1,13 +1,17 @@
 import { AiOutlineUser, AiTwotoneShop } from "react-icons/ai";
-import BriefCase from "../assets/Briefcase";
-import Home from "../assets/Home";
-import User from "../assets/User";
-import ChatBubble from "../assets/chat-bubble";
-import { Avatar, Badge } from "@nextui-org/react";
+import { Avatar, Badge, Button } from "@nextui-org/react";
 import { PiBriefcase, PiChatTeardropTextFill } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
+import { auth } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Menu: React.FC = () => {
+  const [user] = useAuthState(auth);
+
+  const googleSignOut = () => {
+    auth.signOut();
+  };
+
   // I should add pr-2 to every div when it's clicked
   return (
     <p className="bg-indigo-700 lg:basis-1/12 w-full relative  flex flex-col  justify-between">
@@ -15,7 +19,7 @@ const Menu: React.FC = () => {
         <NavLink
           className={({ isActive }) =>
             isActive
-              ? "w-full rounded-none cursor-pointerpy-3 flex justify-center bg-white inverted-border-menu "
+              ? "w-full rounded-none cursor-pointerpy-3 flex justify-center bg-white inverted-border-menu pr-2"
               : "w-full rounded-none cursor-pointerpy-3 flex justify-center "
           }
           to="/"
@@ -26,7 +30,7 @@ const Menu: React.FC = () => {
           className={({ isActive }) =>
             isActive
               ? "w-full rounded-none cursor-pointerpy-3 flex justify-center bg-white inverted-border-menu text-indigo-900"
-              : "w-full rounded-none cursor-pointerpy-3 flex justify-center "
+              : "w-full rounded-none cursor-pointerpy-3 flex justify-center pr-2"
           }
           to="/shopping"
         >
@@ -36,7 +40,7 @@ const Menu: React.FC = () => {
           className={({ isActive }) =>
             isActive
               ? "w-full rounded-none cursor-pointerpy-3 flex justify-center bg-white inverted-border-menu text-indigo-900"
-              : "w-full rounded-none cursor-pointerpy-3 flex justify-center "
+              : "w-full rounded-none cursor-pointerpy-3 flex justify-center pr-2"
           }
           to="/profile"
         >
@@ -46,14 +50,19 @@ const Menu: React.FC = () => {
           className={({ isActive }) =>
             isActive
               ? "w-full rounded-none cursor-pointerpy-3 flex justify-center bg-white inverted-border-menu text-indigo-900"
-              : "w-full rounded-none cursor-pointerpy-3 flex justify-center "
+              : "w-full rounded-none cursor-pointerpy-3 flex justify-center pr-2"
           }
           to="/works"
         >
           <PiBriefcase className="lg:size-10 " />
         </NavLink>
       </div>
-      <div className="flex items-end justify-center">
+      <div className="flex flex-col items-center justify-end">
+        {user && (
+          <Button color="secondary" onClick={googleSignOut}>
+            SignOut
+          </Button>
+        )}
         <Badge content="" color="success" shape="circle">
           <Avatar
             src="https://i.pravatar.cc/150?u=a04258114e29026702d"

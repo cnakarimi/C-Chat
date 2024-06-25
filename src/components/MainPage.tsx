@@ -7,8 +7,11 @@ import { VscSend } from "react-icons/vsc";
 import { faker } from "@faker-js/faker";
 import { createContext, useState } from "react";
 import { useMyContext } from "./context/EmojiToggler";
+import { useParams } from "react-router-dom";
 
 const MainPage: React.FC = () => {
+  const { userId } = useParams();
+  console.log(userId);
   const { toggle } = useMyContext();
   function createRandomUser(): User {
     return {
