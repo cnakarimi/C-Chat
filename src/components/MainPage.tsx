@@ -5,15 +5,46 @@ import { GrEmoji } from "react-icons/gr";
 import { RxPencil1 } from "react-icons/rx";
 import { VscSend } from "react-icons/vsc";
 import { faker } from "@faker-js/faker";
-import { createContext, useState } from "react";
 import { useMyContext } from "./context/EmojiToggler";
 import { useParams } from "react-router-dom";
+import { Virtuoso } from "react-virtuoso";
+import { useState, useEffect, useCallback } from "react";
+
+interface User {
+  _id: string;
+  avatar: string;
+  birthday: Date;
+  email: string;
+  firstName: string;
+  lastName: string;
+  sex: string;
+  message: string;
+  subscriptionTier: "free" | "basic" | "business";
+}
 
 const MainPage: React.FC = () => {
   const { userId } = useParams();
   console.log(userId);
   const { toggle } = useMyContext();
+  const [users, setUsers] = useState<User[]>([]);
+
+  console.log(createRandomUser());
+
+  const loadMore = useCallback(() => {
+    const timeout = setTimeout(() => {
+      setUsers((prevUsers) => [...prevUsers, createRandomUser()]);
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    loadMore();
+  }, [loadMore]);
+
   function createRandomUser(): User {
+    // Your faker logic here
+    // ...
+
     return {
       _id: faker.string.uuid(),
       avatar: faker.image.avatar(),
@@ -22,6 +53,7 @@ const MainPage: React.FC = () => {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       sex: faker.person.sexType(),
+      message: faker.lorem.paragraph(),
       subscriptionTier: faker.helpers.arrayElement([
         "free",
         "basic",
@@ -29,42 +61,6 @@ const MainPage: React.FC = () => {
       ]),
     };
   }
-
-  const user = createRandomUser();
-  const user1 = createRandomUser();
-  const user2 = createRandomUser();
-  const user3 = createRandomUser();
-  const user4 = createRandomUser();
-  const user5 = createRandomUser();
-  const user6 = createRandomUser();
-  const user7 = createRandomUser();
-  const user8 = createRandomUser();
-  const user9 = createRandomUser();
-  const user10 = createRandomUser();
-  const users = [
-    user,
-    user1,
-    user2,
-    user3,
-    user4,
-    user5,
-    user6,
-    user7,
-    user8,
-    user9,
-    user10,
-  ];
-  console.log(users);
-
-  const usersChat = users.map((user) => (
-    <div className="mt-3" id={user._id}>
-      <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
-        <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
-          {user.firstName}
-        </p>
-      </div>
-    </div>
-  ));
 
   return (
     <div className="lg:basis-6/12 h-full bg-chatbg flex flex-col relative">
@@ -97,59 +93,21 @@ const MainPage: React.FC = () => {
           <p className="px-1 text-gray-500">Edited</p>
           <p className="text-gray-500">22:22</p>
         </div>
-        {usersChat}
-        <div className="mt-3">
-          <p className="text-gray-500">22:22</p>
-          <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
-            <p className="text-sm font-medium py-2.5 text-gray-900 dark:text-white">
-              That's awesome. I think our users will really appreciate the
-              improvements.
-            </p>
-          </div>
-          <div className="py-3 flex items-center text-sm text-gray-500 before:flex-1 before:border-t before:border-gray-300 before:me-6 after:flex-1 after:border-t after:border-gray-300 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">
-            Today
-          </div>
-          <div className="flex place-items-center	">
-            <Avatar
-              src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
-              size="sm"
-            />
-            <p className="font-medium px-2">Sadjat</p>
-            <p className="text-gray-500">22:22</p>
-          </div>
-          <div className="mt-3">
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
-              <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
-                That's awesome. I think our users will really appreciate the
-                improvements.
-              </p>
+        <Virtuoso
+          style={{ height: 1000 }}
+          data={users}
+          endReached={loadMore}
+          increaseViewportBy={200}
+          itemContent={(_, user) => (
+            <div className="mt-3" id={user._id}>
+              <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
+                  {user.message}
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-row-reverse place-items-center	mt-3 place-content-end">
-            <Avatar
-              src="https://i.pravatar.cc/150?u=a04258114e29026702d"
-              size="sm"
-            />
-            <p className="text-gray-500 px-2">22:22</p>
-          </div>
-          <div className="mt-3 flex place-content-end">
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-userbubble rounded-b-xl rounded-s-xl dark:bg-gray-700">
-              <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
-                That's awesome. I think our users will really appreciate the
-                improvements.
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-row-reverse place-items-center	mt-3 place-content-end"></div>
-          <div className="mt-3 flex place-content-end">
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-userbubble rounded-b-xl rounded-s-xl dark:bg-gray-700">
-              <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
-                That's awesome. I think our users will really appreciate the
-                improvements.
-              </p>
-            </div>
-          </div>
-        </div>
+          )}
+        />
       </div>
       <form className="absolute bottom-0 w-full py-4 px-2 bg-white justify-center">
         <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">

@@ -1,14 +1,13 @@
 import { Button } from "@nextui-org/react";
 import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 import React from "react";
-import { auth } from "../firebase";
+import { auth } from "../lib/firebase";
 
 const Welcome: React.FC = () => {
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
     signInWithRedirect(auth, provider);
   };
-
   return (
     <div className="flex flex-col justify-center">
       <div>Welcome!</div>

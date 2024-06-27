@@ -15,6 +15,7 @@ const Chatroom: React.FC = () => {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       sex: faker.person.sexType(),
+      message: faker.lorem.lines(),
       subscriptionTier: faker.helpers.arrayElement([
         "free",
         "basic",
@@ -63,7 +64,7 @@ const Chatroom: React.FC = () => {
         <div className="flex flex-col justify-between mx-5 w-3/4 ">
           <p className="font-bold">{user.firstName}</p>
           <div className="flex place-content-between text-gray-400 font-semibold">
-            <p>{user.discription}</p>
+            <p>{user.sex}</p>
             <p className="">22:22</p>
           </div>
         </div>

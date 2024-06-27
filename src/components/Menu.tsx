@@ -2,19 +2,24 @@ import { AiOutlineUser, AiTwotoneShop } from "react-icons/ai";
 import { Avatar, Badge, Button } from "@nextui-org/react";
 import { PiBriefcase, PiChatTeardropTextFill } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
-import { auth } from "../firebase";
+import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { auth } from "../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const Menu: React.FC = () => {
   const [user] = useAuthState(auth);
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithRedirect(auth, provider);
+  };
+  console.log(user);
 
   const googleSignOut = () => {
     auth.signOut();
   };
-
   // I should add pr-2 to every div when it's clicked
   return (
-    <p className="bg-indigo-700 lg:basis-1/12 w-full relative  flex flex-col  justify-between">
+    <p className="bg-indigo-700 lg:basis-1.5 w-full relative  flex flex-col  justify-between">
       <div className="flex flex-col items-center justify-around h-1/4 text-slate-100">
         <NavLink
           className={({ isActive }) =>
@@ -58,7 +63,9 @@ const Menu: React.FC = () => {
         </NavLink>
       </div>
       <div className="flex flex-col items-center justify-end">
-        {user && (
+        {!user ? (
+          <Button onClick={googleSignIn}>SignIn</Button>
+        ) : (
           <Button color="secondary" onClick={googleSignOut}>
             SignOut
           </Button>
