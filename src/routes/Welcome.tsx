@@ -1,20 +1,18 @@
 import { Button } from "@nextui-org/react";
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 import React from "react";
-import { auth } from "../lib/firebase";
 
-const Welcome: React.FC = () => {
-  const googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithRedirect(auth, provider);
-  };
+interface SignIn {
+  signIn: () => void;
+}
+
+const Welcome: React.FC<SignIn> = (props) => {
   return (
-    <div className="flex flex-col justify-center">
+    <div className="w-full flex flex-col justify-center items-center">
       <div>Welcome!</div>
       <Button
         radius="full"
-        className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-        onClick={googleSignIn}
+        className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg mt-10"
+        onClick={props.signIn}
       >
         SignIn
       </Button>

@@ -1,19 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Menu from "../components/Menu";
-
 import "../App.scss";
-import { useAuthState } from "react-firebase-hooks/auth";
 import ForAuthUser from "../components/ForAuthUser";
-import { auth } from "../lib/firebase";
+import Welcome from "./Welcome";
 
 const Home: React.FC = () => {
-  const [user] = useAuthState(auth);
-  console.log(user);
+  const [user, setUser] = useState(false);
+  const UserSignedIn = () => {
+    setUser(true);
+  };
 
   return (
     <div className="w-full lg:h-screen flex">
       <Menu />
-      <ForAuthUser />
+      {!user ? <Welcome signIn={UserSignedIn} /> : <ForAuthUser />}
     </div>
   );
 };
