@@ -4,7 +4,7 @@ import { useMyContext } from "./context/EmojiToggler";
 const Emojis: React.FC = () => {
   const { isOn } = useMyContext();
   return (
-    <div className={`${isOn && "hidden"}`}>
+    <div className={`hidden lg:block ${isOn && "lg:hidden"}`}>
       <EmojiPicker height="100%" className="" />
     </div>
   );

@@ -81,3 +81,14 @@ body {
   border-top-right-radius: 25px;
   box-shadow: 0 -24px 0 0 white;
 }
+
+@media (max-width: 640px) {
+  .inverted-border-radius {
+    position: relative;
+    /* background of main div*/
+    padding-top: 20px;
+    padding-left: 8px;
+    border-radius: 0px 8px 8px 8px;
+    place-items: center;
+  }
+}

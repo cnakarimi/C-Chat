@@ -2,14 +2,11 @@ import { Avatar } from "@nextui-org/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { GrEmoji } from "react-icons/gr";
-import { RxPencil1 } from "react-icons/rx";
 import { VscSend } from "react-icons/vsc";
 import { faker } from "@faker-js/faker";
 import { useMyContext } from "./context/EmojiToggler";
 import { useParams } from "react-router-dom";
 import { Virtuoso } from "react-virtuoso";
-import { Skeleton } from "@nextui-org/skeleton";
-import Caard from "./Card";
 import { Spinner } from "@nextui-org/react";
 import { useState, useEffect, useCallback } from "react";
 
@@ -26,13 +23,9 @@ interface User {
 }
 
 const MainPage: React.FC = () => {
-  const { userId } = useParams();
-  console.log(userId);
   const { toggle } = useMyContext();
   const [users, setUsers] = useState<User[]>([]);
   const [messagesLoad, setMessagesLoad] = useState(false);
-
-  console.log(createRandomUser());
 
   const loadMore = useCallback(() => {
     const timeout = setTimeout(() => {
@@ -70,22 +63,24 @@ const MainPage: React.FC = () => {
   }
 
   return (
-    <div className="lg:basis-6/12 h-full bg-chatbg flex flex-col relative">
+    <div className="lg:basis-6/12 basis-full h-full bg-chatbg flex flex-col relative">
       <header className="py-5 px-4 flex bg-white">
         <div className="flex basis-full	justify-between">
           <div className="flex">
             <Avatar
               src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
-              size="lg"
+              className="sm:w-14 sm:h-14 w-12 h-12"
             />
             <div className="flex flex-col place-content-between font-semibold px-4">
-              <p className="font-bold">Mamad</p>
-              <p className="font-semibold text-gray-400">Online</p>
+              <p className="sm:font-bold sm:text-base text-sm">Mamad</p>
+              <p className="font-semibold text-gray-400 sm:text-base text-sm">
+                Online
+              </p>
             </div>
           </div>
           <div className="flex place-self-center justify-around basis-1/5">
-            <CiSearch className="lg:size-8" />
-            <BsThreeDotsVertical className="lg:size-8" />
+            <CiSearch className="sm:size-8 size-5" />
+            <BsThreeDotsVertical className="sm:size-8 size-5" />
           </div>
         </div>
       </header>

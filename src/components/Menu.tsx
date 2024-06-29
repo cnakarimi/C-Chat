@@ -2,24 +2,20 @@ import { AiOutlineUser, AiTwotoneShop } from "react-icons/ai";
 import { Avatar, Badge, Button } from "@nextui-org/react";
 import { PiBriefcase, PiChatTeardropTextFill } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
-import { auth } from "../lib/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useSignInContext } from "./context/SignIn";
+import { useMenuContext } from "./context/MenuToggler";
 
 const Menu: React.FC = () => {
-  const [user] = useAuthState(auth);
-  const googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithRedirect(auth, provider);
-  };
-  console.log(user);
+  const { isSignIn, signOut } = useSignInContext();
+  const { isOn } = useMenuContext();
 
-  const googleSignOut = () => {
-    auth.signOut();
-  };
   // I should add pr-2 to every div when it's clicked
   return (
-    <p className="bg-indigo-700 lg:basis-1.5 w-full relative  flex flex-col  justify-between">
+    <p
+      className={`bg-indigo-700 lg:basis-1.5 sm:basis-1.5 relative h-screen ${
+        isOn ? "flex" : "hidden"
+      } sm:flex flex-col justify-between`}
+    >
       <div className="flex flex-col items-center justify-around h-1/4 text-slate-100">
         <NavLink
           className={({ isActive }) =>
@@ -29,7 +25,7 @@ const Menu: React.FC = () => {
           }
           to="/"
         >
-          <PiChatTeardropTextFill className="lg:size-10 text-lightblue" />
+          <PiChatTeardropTextFill className="lg:size-10 size-7 text-lightblue" />
         </NavLink>
         <NavLink
           className={({ isActive }) =>
@@ -39,7 +35,7 @@ const Menu: React.FC = () => {
           }
           to="/shopping"
         >
-          <AiTwotoneShop className="lg:size-10 w-full" />
+          <AiTwotoneShop className="lg:size-10 size-7 w-full" />
         </NavLink>
         <NavLink
           className={({ isActive }) =>
@@ -49,7 +45,7 @@ const Menu: React.FC = () => {
           }
           to="/profile"
         >
-          <AiOutlineUser className="lg:size-10 " />
+          <AiOutlineUser className="lg:size-10 size-7 w-full" />
         </NavLink>
         <NavLink
           className={({ isActive }) =>
@@ -59,17 +55,16 @@ const Menu: React.FC = () => {
           }
           to="/works"
         >
-          <PiBriefcase className="lg:size-10 " />
+          <PiBriefcase className="lg:size-10 size-7" />
         </NavLink>
       </div>
       <div className="flex flex-col items-center justify-end">
-        {!user ? (
-          <Button onClick={googleSignIn}>SignIn</Button>
-        ) : (
-          <Button color="secondary" onClick={googleSignOut}>
+        {isSignIn && (
+          <Button color="secondary" onClick={signOut}>
             SignOut
           </Button>
         )}
+
         <Badge content="" color="success" shape="circle">
           <Avatar
             src="https://i.pravatar.cc/150?u=a04258114e29026702d"

@@ -9,6 +9,8 @@ import Home from "./routes/Home.tsx";
 import Profile from "./routes/Profile.tsx";
 import Works from "./routes/Works.tsx";
 import Shopping from "./routes/Shopping.tsx";
+import { SignInProvider } from "./components/context/SignIn.tsx";
+import { MenuContextProvider } from "./components/context/MenuToggler.tsx";
 
 const router = createBrowserRouter([
   {
@@ -31,9 +33,13 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <MyContextProvider>
-      <NextUIProvider>
-        <RouterProvider router={router} />
-      </NextUIProvider>
+      <SignInProvider>
+        <MenuContextProvider>
+          <NextUIProvider>
+            <RouterProvider router={router} />
+          </NextUIProvider>
+        </MenuContextProvider>
+      </SignInProvider>
     </MyContextProvider>
   </React.StrictMode>
 );
