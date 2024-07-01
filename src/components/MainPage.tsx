@@ -5,10 +5,12 @@ import { GrEmoji } from "react-icons/gr";
 import { VscSend } from "react-icons/vsc";
 import { faker } from "@faker-js/faker";
 import { useMyContext } from "./context/EmojiToggler";
-import { useParams } from "react-router-dom";
 import { Virtuoso } from "react-virtuoso";
 import { Spinner } from "@nextui-org/react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
+import { MessageContext } from "../components/context/Messages";
+import Message from "./interfaces/Message";
+import { useParams } from "react-router-dom";
 
 interface User {
   _id: string;
@@ -26,10 +28,40 @@ const MainPage: React.FC = () => {
   const { toggle } = useMyContext();
   const [users, setUsers] = useState<User[]>([]);
   const [messagesLoad, setMessagesLoad] = useState(false);
+  const { addMessage } = useContext(MessageContext);
+  const [inputValue, setInputValue] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const { _id } = useParams<{ _id: string }>();
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    const newMessage: Message = {
+      id: Date.now().toString(),
+      recipientId: _id ?? "",
+      content: inputValue,
+      dateSent: new Date(),
+    };
+    addMessage(newMessage);
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    setInputValue("");
+  };
+
+  // Load messages from local storage on initial render
+  useEffect(() => {
+    const storedMessages = JSON.parse(
+      localStorage.getItem("chatMessages") || "[]"
+    );
+    setMessages(storedMessages);
+  }, []);
+
+  // Save messages to local storage whenever they change
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
 
   const loadMore = useCallback(() => {
     const timeout = setTimeout(() => {
-      setUsers((prevUsers) => [...prevUsers, createRandomUser()]);
+      setMessages((prevMessages) => [...prevMessages]);
     }, 500);
     return () => clearTimeout(timeout);
   }, []);
@@ -41,26 +73,11 @@ const MainPage: React.FC = () => {
     }, 5000);
   }, [loadMore]);
 
-  function createRandomUser(): User {
-    // Your faker logic here
-    // ...
+  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
 
-    return {
-      _id: faker.string.uuid(),
-      avatar: faker.image.avatar(),
-      birthday: faker.date.birthdate(),
-      email: faker.internet.email(),
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-      sex: faker.person.sexType(),
-      message: faker.lorem.paragraph(),
-      subscriptionTier: faker.helpers.arrayElement([
-        "free",
-        "basic",
-        "business",
-      ]),
-    };
-  }
+  console.log(messages);
 
   return (
     <div className="lg:basis-6/12 basis-full h-full bg-chatbg flex flex-col relative">
@@ -89,10 +106,10 @@ const MainPage: React.FC = () => {
         {messagesLoad ? (
           <Virtuoso
             style={{ height: 1000 }}
-            data={users}
+            data={messages}
             endReached={loadMore}
             increaseViewportBy={200}
-            itemContent={(_, user) => (
+            itemContent={(index, messages) => (
               <div className="pt-6">
                 <div className="flex place-items-center">
                   <Avatar
@@ -101,11 +118,10 @@ const MainPage: React.FC = () => {
                   />
                   <p className="font-medium px-2">Sadjat</p>
                 </div>
-
-                <div className="mt-3" id={user._id}>
+                <div className="mt-3" id={messages.id}>
                   <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
                     <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
-                      {user.message}
+                      {messages.content}
                     </p>
                   </div>
                 </div>
@@ -131,17 +147,21 @@ const MainPage: React.FC = () => {
             />
           </div>
           <input
-            type="search"
-            id="search"
+            type="text"
+            id="text"
+            value={inputValue}
             className="block w-full p-4 ps-14 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Type Here..."
-            required
+            onChange={handleMessageChange}
           />
           <button
             type="submit"
             className="text-white absolute end-2.5 bottom-1/2 translate-y-1/2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            <VscSend className="size-7 text-gray-400 justify-self-center	" />
+            <VscSend
+              className="size-7 text-gray-400 justify-self-center	"
+              onClick={sendMessage}
+            />
           </button>
         </div>
       </form>
