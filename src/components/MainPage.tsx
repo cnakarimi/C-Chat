@@ -11,35 +11,27 @@ import { useState, useEffect, useCallback, useContext } from "react";
 import { MessageContext } from "../components/context/Messages";
 import Message from "./interfaces/Message";
 import { useParams } from "react-router-dom";
-
-interface User {
-  _id: string;
-  avatar: string;
-  birthday: Date;
-  email: string;
-  firstName: string;
-  lastName: string;
-  sex: string;
-  message: string;
-  subscriptionTier: "free" | "basic" | "business";
-}
+import users from "../Data";
 
 const MainPage: React.FC = () => {
   const { toggle } = useMyContext();
-  const [users, setUsers] = useState<User[]>([]);
   const [messagesLoad, setMessagesLoad] = useState(false);
   const { addMessage } = useContext(MessageContext);
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const { _id } = useParams<{ _id: string }>();
+  const { isOn } = useMyContext();
+  const { id } = useParams();
+  const paramsId = id?.slice(2);
 
   const sendMessage = (e) => {
     e.preventDefault();
     const newMessage: Message = {
       id: Date.now().toString(),
-      recipientId: _id ?? "",
+      recipientId: paramsId ?? "",
       content: inputValue,
       dateSent: new Date(),
+      sender: "Me",
     };
     addMessage(newMessage);
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -77,19 +69,31 @@ const MainPage: React.FC = () => {
     setInputValue(e.target.value);
   };
 
-  console.log(messages);
+  const selectedUser = users.find((user) => user.id === paramsId);
+
+  const messagesToShow = messages.filter(
+    (message) => message.recipientId === paramsId
+  );
+
+  console.log(messagesToShow);
 
   return (
-    <div className="lg:basis-6/12 basis-full h-full bg-chatbg flex flex-col relative">
+    <div
+      className={`lg:basis-6/12 basis-full ${
+        isOn && "lg:basis-full"
+      } h-full bg-chatbg flex flex-col relative`}
+    >
       <header className="py-5 px-4 flex bg-white">
         <div className="flex basis-full	justify-between">
           <div className="flex">
             <Avatar
-              src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
+              src={selectedUser?.avatar}
               className="sm:w-14 sm:h-14 w-12 h-12"
             />
             <div className="flex flex-col place-content-between font-semibold px-4">
-              <p className="sm:font-bold sm:text-base text-sm">Mamad</p>
+              <p className="sm:font-bold sm:text-base text-sm">
+                {selectedUser?.firstName}
+              </p>
               <p className="font-semibold text-gray-400 sm:text-base text-sm">
                 Online
               </p>
@@ -106,26 +110,38 @@ const MainPage: React.FC = () => {
         {messagesLoad ? (
           <Virtuoso
             style={{ height: 1000 }}
-            data={messages}
+            data={messagesToShow}
             endReached={loadMore}
             increaseViewportBy={200}
-            itemContent={(index, messages) => (
-              <div className="pt-6">
-                <div className="flex place-items-center">
-                  <Avatar
-                    src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
-                    size="sm"
-                  />
-                  <p className="font-medium px-2">Sadjat</p>
-                </div>
-                <div className="mt-3" id={messages.id}>
-                  <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
+            itemContent={(index, messagesToShow) => (
+              <>
+                <div
+                  className="mt-3 flex place-content-end"
+                  key={messagesToShow?.id}
+                >
+                  <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-userbubble rounded-b-xl rounded-s-xl dark:bg-gray-700">
                     <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
-                      {messages.content}
+                      {messagesToShow?.content}
                     </p>
                   </div>
                 </div>
-              </div>
+                <div className="pt-6">
+                  <div className="flex place-items-center">
+                    <Avatar
+                      src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
+                      size="sm"
+                    />
+                    <p className="font-medium px-2">Sadjat</p>
+                  </div>
+                  <div className="mt-3" id={messagesToShow?.id}>
+                    <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                      <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
+                        {messagesToShow?.content}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </>
             )}
           />
         ) : (
