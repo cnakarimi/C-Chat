@@ -4,6 +4,7 @@ import { Tabs, Tab } from "@nextui-org/react";
 import GalleryIcon from "../components/Icons/GalleryIcon";
 import MusicIcon from "../components/Icons/MusicIcon";
 import VideoIcon from "../components/Icons/VideoIcon";
+import PortalComponent from "../PortalComponent";
 
 const Profile: React.FC = () => {
   const profileImageStyle = {
@@ -93,6 +94,7 @@ const Profile: React.FC = () => {
           </div>
         </div>
       </div>
+      <PortalComponent />
     </div>
   );
 };

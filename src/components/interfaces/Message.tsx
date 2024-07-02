@@ -3,6 +3,7 @@ interface Message {
   recipientId: string; // ID of the person who received the message
   dateSent: Date; // Date when the message was sent
   content: string; // Content of the message
+  sender: string;
 }
 
 export default Message;
