@@ -1,5 +1,5 @@
 // context/messageContext.tsx
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import Message from "../interfaces/Message";
 
 interface MessageContextType {
@@ -13,6 +13,14 @@ const MessageContext = createContext<MessageContextType | undefined>(undefined);
 // Create a provider component
 const MessageContextProvider: React.FC = ({ children }) => {
   const [messages, setMessages] = useState<Message[]>([]);
+
+  // Load messages from local storage on initial render
+  useEffect(() => {
+    const storedMessages = JSON.parse(
+      localStorage.getItem("chatMessages") || "[]"
+    );
+    setMessages(storedMessages);
+  }, []);
 
   const addMessage = (message: Message) => {
     setMessages((prevMessages) => [...prevMessages, message]);

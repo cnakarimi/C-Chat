@@ -25,7 +25,7 @@ export const SignInProvider: React.FC = ({ children }) => {
   };
 
   const signOut = () => {
-    setIsSignIn(true);
+    setIsSignIn(false);
   };
 
   return (
