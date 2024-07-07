@@ -12,8 +12,9 @@ import { MessageContext } from "../components/context/Messages";
 import Message from "./interfaces/Message";
 import { useParams } from "react-router-dom";
 import users from "../Data";
+import EmojiPicker, { Emoji } from "emoji-picker-react";
 
-const MainPage: React.FC = () => {
+const MainPage: React.FC<{ emojis: string }> = (emojis) => {
   const { toggle } = useMyContext();
   const [messagesLoad, setMessagesLoad] = useState(false);
   const { addMessage } = useContext(MessageContext);
@@ -38,14 +39,6 @@ const MainPage: React.FC = () => {
     setInputValue("");
   };
 
-  // Load messages from local storage on initial render
-  useEffect(() => {
-    const storedMessages = JSON.parse(
-      localStorage.getItem("chatMessages") || "[]"
-    );
-    setMessages(storedMessages);
-  }, []);
-
   // Save messages to local storage whenever they change
   useEffect(() => {
     localStorage.setItem("chatMessages", JSON.stringify(messages));
@@ -54,7 +47,7 @@ const MainPage: React.FC = () => {
   const loadMore = useCallback(() => {
     const timeout = setTimeout(() => {
       setMessages((prevMessages) => [...prevMessages]);
-    }, 500);
+    }, 50);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -65,17 +58,15 @@ const MainPage: React.FC = () => {
     }, 5000);
   }, [loadMore]);
 
-  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
   const selectedUser = users.find((user) => user.id === paramsId);
 
   const messagesToShow = messages.filter(
     (message) => message.recipientId === paramsId
   );
 
-  console.log(messagesToShow);
+  useEffect(() => {
+    setInputValue((prevInputValue) => prevInputValue + emojis.emojis.emoji);
+  }, [emojis]);
 
   return (
     <div
@@ -151,7 +142,10 @@ const MainPage: React.FC = () => {
           />
         )}
       </div>
-      <form className="absolute bottom-0 w-full py-4 px-2 bg-white justify-center">
+      <form
+        className="absolute bottom-0 w-full py-4 px-2 bg-white justify-center"
+        onSubmit={sendMessage}
+      >
         <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
           Search
         </label>
@@ -168,16 +162,13 @@ const MainPage: React.FC = () => {
             value={inputValue}
             className="block w-full p-4 ps-14 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Type Here..."
-            onChange={handleMessageChange}
+            onChange={(e) => setInputValue(e.target.value)}
           />
           <button
             type="submit"
             className="text-white absolute end-2.5 bottom-1/2 translate-y-1/2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            <VscSend
-              className="size-7 text-gray-400 justify-self-center	"
-              onClick={sendMessage}
-            />
+            <VscSend className="size-7 text-gray-400 justify-self-center	" />
           </button>
         </div>
       </form>
