@@ -19,7 +19,7 @@ export const useMyContext = () => {
 };
 
 export const MyContextProvider: React.FC = ({ children }) => {
-  const [isOn, setIsOn] = useState(false);
+  const [isOn, setIsOn] = useState(true);
 
   const toggle = () => {
     setIsOn((prev) => !prev);

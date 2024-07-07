@@ -27,11 +27,20 @@ const MainPage: React.FC<{ emojis: string }> = (emojis) => {
 
   const sendMessage = (e) => {
     e.preventDefault();
+
+    const now = new Date();
+    let hours = now.getHours();
+    // Check for special cases when hour is 0
+    if (hours === 0) {
+      hours = "00";
+    }
+    const minutes = now.getMinutes();
     const newMessage: Message = {
       id: Date.now().toString(),
       recipientId: paramsId ?? "",
       content: inputValue,
       dateSent: new Date(),
+      timeSent: { hours, minutes },
       sender: "Me",
     };
     addMessage(newMessage);
@@ -65,7 +74,9 @@ const MainPage: React.FC<{ emojis: string }> = (emojis) => {
   );
 
   useEffect(() => {
-    setInputValue((prevInputValue) => prevInputValue + emojis.emojis.emoji);
+    if (emojis) {
+      setInputValue((prevInputValue) => prevInputValue + emojis.emojis.emoji);
+    }
   }, [emojis]);
 
   return (
@@ -123,6 +134,10 @@ const MainPage: React.FC<{ emojis: string }> = (emojis) => {
                       size="sm"
                     />
                     <p className="font-medium px-2">Sadjat</p>
+                    <p className="text-gray-500">
+                      {messagesToShow?.timeSent.hours} :
+                      {messagesToShow?.timeSent.minutes}
+                    </p>
                   </div>
                   <div className="mt-3" id={messagesToShow?.id}>
                     <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
