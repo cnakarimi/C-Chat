@@ -7,13 +7,13 @@ import { useMenuContext } from "./context/MenuToggler";
 
 const Menu: React.FC = () => {
   const { isSignIn, signOut } = useSignInContext();
-  const { isOn } = useMenuContext();
+  const { menuIsOn } = useMenuContext();
 
   // I should add pr-2 to every div when it's clicked
   return (
     <p
       className={`bg-indigo-700 lg:basis-1.5 sm:basis-1.5 relative h-screen ${
-        isOn ? "flex" : "hidden"
+        menuIsOn ? "flex" : "hidden"
       } sm:flex flex-col justify-between`}
     >
       <div className="flex flex-col items-center justify-around h-1/4 text-slate-100">

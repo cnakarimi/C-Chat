@@ -4,7 +4,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { useMenuContext } from "./components/context/MenuToggler";
 
 const PortalComponent: React.FC = () => {
-  const { toggle, isOn } = useMenuContext();
+  const { toggle, menuIsOn } = useMenuContext();
   const protalContainer = document.getElementById("portal-container");
 
   if (!protalContainer) {
@@ -13,7 +13,7 @@ const PortalComponent: React.FC = () => {
 
   return ReactDOM.createPortal(
     <>
-      {!isOn ? (
+      {!menuIsOn ? (
         <div className="block absolute sm:hidden top-1/2">
           <AiOutlineRight
             className="bg-stone-400 text-white w-5 h-12 cursor-pointer"
