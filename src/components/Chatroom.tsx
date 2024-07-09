@@ -10,9 +10,14 @@ import users from "../Data";
 
 const Chatroom: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const { isOn } = useMenuContext();
+  const { menuIsOn } = useMenuContext();
   const { id } = useParams<{ id: string }>();
   const paramsId = id?.slice(2);
+  const [chatSelected, setChatSelected] = useState(false);
+
+  const disappearChats = () => {
+    setChatSelected(true);
+  };
 
   const usersInChat = users.map((user) => {
     return (
@@ -21,7 +26,7 @@ const Chatroom: React.FC = () => {
           user.id == paramsId && "inverted-border-radius bg-chatbg"
         }`}
         id={user.id}
-        onClick={() => console.log(`${user.id} clicked`)}
+        onClick={disappearChats}
         to={`/: ${user.id}`}
       >
         <Avatar src={user.avatar} className="w-8 h-8 sm:w-14 sm:h-14" />
@@ -53,13 +58,13 @@ const Chatroom: React.FC = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 5000);
+    }, 3000);
   });
   return (
     <p
-      className={`bg-white lg:basis-4/12 basis-7/12 pl-2 pt-2 lg:pl-5 lg:pt-8 overflow-y-auto sm:block ${
-        isOn ? "hidden" : "block"
-      }`}
+      className={`bg-white lg:basis-3/12 basis-4/12 pl-2 pt-2 lg:pl-5 lg:pt-8 overflow-y-auto sm:block ${
+        menuIsOn || chatSelected ? "hidden" : "block"
+      } `}
     >
       <SearchBar />
       <div className="flex justify-between lg:mx-5 lg:pt-9 pt-4">

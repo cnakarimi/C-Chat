@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
 interface MenuContextType {
-  isOn: boolean;
+  menuIsOn: boolean;
   toggle: () => void;
 }
 
@@ -17,14 +17,14 @@ export const useMenuContext = () => {
 };
 
 export const MenuContextProvider: React.FC = ({ children }) => {
-  const [isOn, setIsOn] = useState(false);
+  const [menuIsOn, setMenuIsOn] = useState(false);
 
   const toggle = () => {
-    setIsOn((prev) => !prev);
-    console.log(isOn);
+    setMenuIsOn((prev) => !prev);
+    console.log(menuIsOn);
   };
   return (
-    <MenuContext.Provider value={{ isOn, toggle }}>
+    <MenuContext.Provider value={{ menuIsOn, toggle }}>
       {children}
     </MenuContext.Provider>
   );

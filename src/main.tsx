@@ -14,11 +14,6 @@ import { MenuContextProvider } from "./components/context/MenuToggler.tsx";
 import { MessageContextProvider } from "./components/context/Messages.tsx";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-    errorElement: <div>Error</div>,
-  },
   { path: "/:id", element: <Home /> },
   { path: "/shopping", element: <Shopping /> },
   {

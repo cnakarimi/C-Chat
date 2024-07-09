@@ -3,17 +3,14 @@ import { useMyContext } from "./context/EmojiToggler";
 import EmojiProps from "./interfaces/Emojis";
 import { SetStateAction, useState } from "react";
 
-const Emojis: React.FC<EmojiProps> = ({ onEmojiData }) => {
-  const [chosenEmoji, setChosenEmoji] = useState("");
+const Emojis: React.FC = ({ addEmojiToText }) => {
   const { isOn } = useMyContext();
-  const sendSelectedEmoji = (emojiObject: SetStateAction<null>) => {
-    setChosenEmoji(emojiObject);
-    onEmojiData(chosenEmoji);
-  };
+
   return (
-    <form className={`hidden lg:block ${isOn && "lg:hidden"}`}>
-      <Picker height="100%" className="" onEmojiClick={sendSelectedEmoji} />
-    </form>
+    <Picker
+      height="100%"
+      onEmojiClick={(emoji) => addEmojiToText(emoji.emoji)}
+    />
   );
 };
 
