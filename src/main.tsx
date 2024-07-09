@@ -14,7 +14,6 @@ import { MenuContextProvider } from "./components/context/MenuToggler.tsx";
 import { MessageContextProvider } from "./components/context/Messages.tsx";
 
 const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
   { path: "/:id", element: <Home /> },
   { path: "/shopping", element: <Shopping /> },
   {
@@ -26,7 +25,7 @@ const router = createBrowserRouter([
     element: <Works />,
   },
 ]);
-m;
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <MyContextProvider>
