@@ -29,12 +29,14 @@ const Chatroom: React.FC = () => {
         onClick={disappearChats}
         to={`/: ${user.id}`}
       >
-        <Avatar src={user.avatar} className="w-8 h-8 sm:w-14 sm:h-14" />
+        <Avatar src={user.avatar} className="w-8 h-8 sm:w-12 sm:h-12" />
         <div className="flex flex-col justify-between sm:mx-5 ml-2 w-3/4 ">
-          <p className="font-bold">{user.firstName}</p>
+          <p className="sm:font-bold font-semibold text-base sm:text-lg lg:text-xl">
+            {user.firstName}
+          </p>
           <div className="flex place-content-between 	 text-gray-400 font-semibold">
-            <p>{user.firstName}</p>
-            <p className="">22:22</p>
+            <p className="text-sm sm:text-base">{user.firstName}</p>
+            <p className="text-sm sm:text-base">22:22</p>
           </div>
         </div>
       </NavLink>
@@ -62,7 +64,7 @@ const Chatroom: React.FC = () => {
   });
   return (
     <p
-      className={`bg-white lg:basis-3/12 basis-4/12 pl-2 pt-2 lg:pl-5 lg:pt-8 overflow-y-auto sm:block ${
+      className={`bg-white xl:basis-3/12 lg:basis-6/12 sm:basis-7/12  basis-6/12 pl-2 pt-2  lg:pt-8 overflow-y-auto sm:block ${
         menuIsOn || chatSelected ? "hidden" : "block"
       } `}
     >

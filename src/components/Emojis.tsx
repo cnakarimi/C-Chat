@@ -4,11 +4,10 @@ import EmojiProps from "./interfaces/Emojis";
 import { SetStateAction, useState } from "react";
 
 const Emojis: React.FC = ({ addEmojiToText }) => {
-  const { isOn } = useMyContext();
-
   return (
     <Picker
       height="100%"
+      searchDisabled={true}
       onEmojiClick={(emoji) => addEmojiToText(emoji.emoji)}
     />
   );

@@ -90,7 +90,7 @@ const MainPage: React.FC = () => {
   };
 
   return (
-    <main className="basis-8/12 flex">
+    <main className="flex flex-row w-full">
       <div
         className={`lg:basis-10/12 basis-full ${
           isOn && "lg:basis-full"
@@ -101,13 +101,13 @@ const MainPage: React.FC = () => {
             <div className="flex">
               <Avatar
                 src={selectedUser?.avatar}
-                className="sm:w-14 sm:h-14 w-12 h-12"
+                className="lg:w-20 lg:h-20 sm:w-14 sm:h-14 w-12 h-12"
               />
-              <div className="flex flex-col place-content-between font-semibold px-4">
-                <p className="sm:font-bold sm:text-base text-sm">
+              <div className="flex flex-col place-content-between lg:place-content-evenly font-semibold px-4">
+                <p className="sm:font-bold xl:text-2xl lg:text-lg sm:text-base text-sm">
                   {selectedUser?.firstName}
                 </p>
-                <p className="font-semibold text-gray-400 sm:text-base text-sm">
+                <p className="font-semibold text-gray-400 xl:text-xl   sm:text-sm text-xs">
                   Online
                 </p>
               </div>
@@ -199,7 +199,7 @@ const MainPage: React.FC = () => {
           </div>
         </form>
       </div>{" "}
-      <form className={`basis-1/12 hidden lg:block ${isOn && "lg:hidden"}`}>
+      <form className={`hidden lg:block ${isOn && "lg:hidden"}`}>
         <Emojis addEmojiToText={addEmojiHandler} />
       </form>
     </main>

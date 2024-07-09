@@ -26,7 +26,6 @@ const router = createBrowserRouter([
     element: <Works />,
   },
 ]);
-m;
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <MyContextProvider>
