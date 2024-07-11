@@ -10,6 +10,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        time: ["Montserrat"],
+        names: ["Bona Nova SC"],
+      },
       colors: {
         lightblue: "#00FFD1",
         chatbg: "#F0EFF9",

@@ -31,12 +31,12 @@ const Chatroom: React.FC = () => {
       >
         <Avatar src={user.avatar} className="w-8 h-8 sm:w-12 sm:h-12" />
         <div className="flex flex-col justify-between sm:mx-5 ml-2 w-3/4 ">
-          <p className="sm:font-bold font-semibold text-base sm:text-lg lg:text-xl">
+          <p className="text-base sm:text-lg lg:text-xl font-names font-normal">
             {user.firstName}
           </p>
           <div className="flex place-content-between 	 text-gray-400 font-semibold">
             <p className="text-sm sm:text-base">{user.firstName}</p>
-            <p className="text-sm sm:text-base">22:22</p>
+            <p className=" text-base font-light font-time">22:22</p>
           </div>
         </div>
       </NavLink>

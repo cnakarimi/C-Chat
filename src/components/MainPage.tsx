@@ -45,7 +45,8 @@ const MainPage: React.FC = () => {
     if (hours === 0) {
       hours = "00";
     }
-    const minutes = now.getMinutes();
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+
     const newMessage: Message = {
       id: Date.now().toString(),
       recipientId: paramsId ?? "",
@@ -104,7 +105,7 @@ const MainPage: React.FC = () => {
                 className="lg:w-20 lg:h-20 sm:w-14 sm:h-14 w-12 h-12"
               />
               <div className="flex flex-col place-content-between lg:place-content-evenly font-semibold px-4">
-                <p className="sm:font-bold xl:text-2xl lg:text-lg sm:text-base text-sm">
+                <p className="sm:font-bold xl:text-2xl lg:text-lg sm:text-base text-sm font-names">
                   {selectedUser?.firstName}
                 </p>
                 <p className="font-semibold text-gray-400 xl:text-xl   sm:text-sm text-xs">
@@ -119,10 +120,10 @@ const MainPage: React.FC = () => {
           </div>
         </header>
 
-        <div className="pt-12 mb-32 px-5 overflow-y-auto">
+        <div className="pt-12 mb-32 px-5">
           {messagesLoad ? (
             <Virtuoso
-              style={{ height: 1000 }}
+              style={{ height: 900 }}
               data={messagesToShow}
               endReached={loadMore}
               increaseViewportBy={200}
@@ -132,8 +133,8 @@ const MainPage: React.FC = () => {
                     className="mt-3 flex place-content-end"
                     key={messagesToShow?.id}
                   >
-                    <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-userbubble rounded-b-xl rounded-s-xl dark:bg-gray-700">
-                      <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
+                    <div className="flex flex-col w-full max-w-[320px]  lg:max-w-[400px] leading-1.5 p-4 border-gray-200 bg-userbubble rounded-b-xl rounded-s-xl dark:bg-gray-700">
+                      <p className="text-sm sm:text-base lg:text-lg py-2.5 text-gray-900 dark:text-white font-medium">
                         {messagesToShow?.content}
                       </p>
                     </div>
@@ -142,17 +143,19 @@ const MainPage: React.FC = () => {
                     <div className="flex place-items-center">
                       <Avatar
                         src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
-                        size="sm"
+                        className="w-10 h-10 sm:w-14 sm:h-14"
                       />
-                      <p className="font-medium px-2">Sadjat</p>
-                      <p className="text-gray-500">
+                      <p className="font-medium sm:font-bold lg:font-extrabold px-2 font-names">
+                        {messagesToShow.sender}
+                      </p>
+                      <p className="text-gray-500 font-time text-sm">
                         {messagesToShow?.timeSent.hours} :
                         {messagesToShow?.timeSent.minutes}
                       </p>
                     </div>
                     <div className="mt-3" id={messagesToShow?.id}>
-                      <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                        <p className="text-sm py-2.5 text-gray-900 dark:text-white font-medium	">
+                      <div className="flex flex-col w-full max-w-[320px] lg:max-w-[400px] leading-1.5 p-4 border-gray-200 bg-chatbubble rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                        <p className="text-sm sm:text-base lg:text-lg py-2.5 text-gray-900 dark:text-white font-medium font-playwrite">
                           {messagesToShow?.content}
                         </p>
                       </div>
