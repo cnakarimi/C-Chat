@@ -3,16 +3,18 @@ import { Tabs, Tab } from "@nextui-org/react";
 import GalleryIcon from "../Icons/GalleryIcon";
 import MusicIcon from "../Icons/MusicIcon";
 import VideoIcon from "../Icons/VideoIcon";
+import Settings from "../Profile/Setting"; // Import the Settings component
+import MyProfile from "./MyProfile"; // Import the MyProfile component
 
 const ProfileTabs: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState("photos");
+  const [selectedTab, setSelectedTab] = useState("settings");
 
   const renderContent = () => {
     switch (selectedTab) {
-      case "photos":
-        return <div>Photo content here</div>;
-      case "music":
-        return <div>Music content here</div>;
+      case "settings":
+        return <Settings />;
+      case "myProfile":
+        return <MyProfile />;
       case "videos":
         return <div>Video content here</div>;
       default:
@@ -30,20 +32,22 @@ const ProfileTabs: React.FC = () => {
         onSelectionChange={(key) => setSelectedTab(key)}
       >
         <Tab
-          key="photos"
+          key="settings"
           title={
             <div className="flex items-center space-x-2">
-              <GalleryIcon />
-              <span>Photos</span>
+              <GalleryIcon />{" "}
+              {/* You can replace this icon with a settings icon if you have one */}
+              <span>Settings</span>
             </div>
           }
         />
         <Tab
-          key="music"
+          key="myProfile"
           title={
             <div className="flex items-center space-x-2">
-              <MusicIcon />
-              <span>Music</span>
+              <MusicIcon />{" "}
+              {/* Replace this with an appropriate icon for My Profile */}
+              <span>My Profile</span>
             </div>
           }
         />
