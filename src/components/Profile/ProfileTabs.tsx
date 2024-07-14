@@ -3,18 +3,22 @@ import { Tabs, Tab } from "@nextui-org/react";
 import GalleryIcon from "../Icons/GalleryIcon";
 import MusicIcon from "../Icons/MusicIcon";
 import VideoIcon from "../Icons/VideoIcon";
-import Settings from "../Profile/Setting"; // Import the Settings component
-import MyProfile from "./MyProfile"; // Import the MyProfile component
+import Settings from "../Profile/Setting";
+import MyProfile from "./MyProfile";
+import { useFormContext } from "../context/FormContext";
 
 const ProfileTabs: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState("settings");
+  const [selectedTab, setSelectedTab] = useState<string>("settings");
+  const { formData, updateFormData } = useFormContext();
 
   const renderContent = () => {
     switch (selectedTab) {
       case "settings":
-        return <Settings />;
+        return <Settings formData={formData} updateFormData={updateFormData} />;
       case "myProfile":
-        return <MyProfile />;
+        return (
+          <MyProfile formData={formData} updateFormData={updateFormData} />
+        );
       case "videos":
         return <div>Video content here</div>;
       default:
@@ -29,14 +33,13 @@ const ProfileTabs: React.FC = () => {
         color="primary"
         variant="bordered"
         selectedKey={selectedTab}
-        onSelectionChange={(key) => setSelectedTab(key)}
+        onSelectionChange={(key) => setSelectedTab(key as string)}
       >
         <Tab
           key="settings"
           title={
             <div className="flex items-center space-x-2">
-              <GalleryIcon />{" "}
-              {/* You can replace this icon with a settings icon if you have one */}
+              <GalleryIcon />
               <span>Settings</span>
             </div>
           }
@@ -45,8 +48,7 @@ const ProfileTabs: React.FC = () => {
           key="myProfile"
           title={
             <div className="flex items-center space-x-2">
-              <MusicIcon />{" "}
-              {/* Replace this with an appropriate icon for My Profile */}
+              <MusicIcon />
               <span>My Profile</span>
             </div>
           }

@@ -1,27 +1,25 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useFormContext } from "../context/FormContext";
 
 const Settings: React.FC = () => {
-  // Define state for form fields
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const { formData, updateFormData } = useFormContext();
+  const [localFormData, setLocalFormData] = useState<FormData>(formData);
 
-  // Handle input changes
+  useEffect(() => {
+    setLocalFormData(formData);
+  }, [formData]);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setFormData((prevData) => ({
+    setLocalFormData((prevData) => ({
       ...prevData,
       [id]: value,
     }));
   };
 
-  // Handle form submission
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // Process the form data (e.g., send it to a server)
-    console.log("Form submitted:", formData);
+    updateFormData(localFormData);
   };
 
   return (
@@ -37,7 +35,7 @@ const Settings: React.FC = () => {
           className="rounded-md border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
           type="text"
           id="username"
-          value={formData.username}
+          value={localFormData.username}
           onChange={handleInputChange}
           placeholder="Enter your username"
         />
@@ -53,7 +51,7 @@ const Settings: React.FC = () => {
           className="rounded-md border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
           type="email"
           id="email"
-          value={formData.email}
+          value={localFormData.email}
           onChange={handleInputChange}
           placeholder="Enter your email"
         />
@@ -69,7 +67,7 @@ const Settings: React.FC = () => {
           className="rounded-md border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
           type="password"
           id="password"
-          value={formData.password}
+          value={localFormData.password}
           onChange={handleInputChange}
           placeholder="Enter your password"
         />
