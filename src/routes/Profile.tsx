@@ -5,7 +5,6 @@ import ProfileHeader from "../components/Profile/ProfileHeader";
 import ProfileInfo from "../components/Profile/ProfileInfo";
 import ProfileStats from "../components/Profile/ProfileStats";
 import ProfileTabs from "../components/Profile/ProfileTabs";
-import ProfileDescription from "../components/Profile/ProfileDescription";
 
 const Profile: React.FC = () => {
   const profileImageStyle = {
@@ -20,7 +19,6 @@ const Profile: React.FC = () => {
         <ProfileInfo />
         <ProfileStats />
         <ProfileTabs />
-        <ProfileDescription />
       </div>
       <PortalComponent />
     </div>
