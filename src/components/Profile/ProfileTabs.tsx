@@ -3,16 +3,22 @@ import { Tabs, Tab } from "@nextui-org/react";
 import GalleryIcon from "../Icons/GalleryIcon";
 import MusicIcon from "../Icons/MusicIcon";
 import VideoIcon from "../Icons/VideoIcon";
+import Settings from "../Profile/Setting";
+import MyProfile from "./MyProfile";
+import { useFormContext } from "../context/FormContext";
 
 const ProfileTabs: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState("photos");
+  const [selectedTab, setSelectedTab] = useState<string>("settings");
+  const { formData, updateFormData } = useFormContext();
 
   const renderContent = () => {
     switch (selectedTab) {
-      case "photos":
-        return <div>Photo content here</div>;
-      case "music":
-        return <div>Music content here</div>;
+      case "settings":
+        return <Settings formData={formData} updateFormData={updateFormData} />;
+      case "myProfile":
+        return (
+          <MyProfile formData={formData} updateFormData={updateFormData} />
+        );
       case "videos":
         return <div>Video content here</div>;
       default:
@@ -27,23 +33,23 @@ const ProfileTabs: React.FC = () => {
         color="primary"
         variant="bordered"
         selectedKey={selectedTab}
-        onSelectionChange={(key) => setSelectedTab(key)}
+        onSelectionChange={(key) => setSelectedTab(key as string)}
       >
         <Tab
-          key="photos"
+          key="settings"
           title={
             <div className="flex items-center space-x-2">
               <GalleryIcon />
-              <span>Photos</span>
+              <span>Settings</span>
             </div>
           }
         />
         <Tab
-          key="music"
+          key="myProfile"
           title={
             <div className="flex items-center space-x-2">
               <MusicIcon />
-              <span>Music</span>
+              <span>My Profile</span>
             </div>
           }
         />
