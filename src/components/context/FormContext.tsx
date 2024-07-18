@@ -3,8 +3,8 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 
 interface FormData {
   username: string;
-  email: string;
-  password: string;
+  phonenumber: string;
+  age: string;
 }
 
 interface FormContextProps {
@@ -27,8 +27,8 @@ export const FormProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [formData, setFormData] = useState<FormData>({
     username: "",
-    email: "",
-    password: "",
+    phonenumber: "",
+    age: "",
   });
 
   const updateFormData = (data: Partial<FormData>) => {

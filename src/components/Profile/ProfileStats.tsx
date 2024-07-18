@@ -14,12 +14,12 @@ const ProfileStats: React.FC = () => {
       </div>
       <div className="flex flex-col items-center justify-center">
         <h3 className="text-bluePrimary text-2xl font-bold">
-          {formData.email}
+          {formData.phonenumber}
         </h3>
-        <p className="text-lightSecondary text-sm font-normal">Email</p>
+        <p className="text-lightSecondary text-sm font-normal">Phone Number</p>
       </div>
       <div className="flex flex-col items-center justify-center">
-        <h3 className="text-bluePrimary text-2xl font-bold">27</h3>
+        <h3 className="text-bluePrimary text-2xl font-bold">{formData.age}</h3>
         <p className="text-lightSecondary text-sm font-normal">Age</p>
       </div>
     </div>
